@@ -1,0 +1,9 @@
+body {
+    background: url(../image/xxx.png) top right no-repeat;
+}
+
+#root div{
+    width: 200px;
+    margin-top: 50px;
+    transform: rotate(45deg);
+}
