@@ -1,4 +1,4 @@
-import '../css/style.css'
+/** @format */
+const str = require("./two")
 
-const hello = require('./hello.js')
-document.querySelector("#root").appendChild(hello());
+console.log(str)
