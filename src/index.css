@@ -1,0 +1,5 @@
+@import "./a.css";
+@import "./aa.less";
+body {
+  color: red;
+}
