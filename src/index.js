@@ -1,4 +1,4 @@
 /** @format */
 const str = require("./two")
 
-console.log(str)
+console.log(111, str)
