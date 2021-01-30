@@ -1,9 +1,10 @@
-/** @format */
-
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+
 module.exports = {
-  mode: "development",
+  mode: "production",
   entry: "./src/index.js",
   output: {
     filename: "bundle.[hash:8].js",
@@ -14,16 +15,18 @@ module.exports = {
       {
         // css-loader 处理@import语法
         // style-loader 把css插入到header标签中
-        test: /\.css$/,
-        use: ["style-loader", "css-loader", "less-loader"],
-      },
-      {
-        test: /\.less$/,
-        use: ["style-loader", "css-loader", "less-loader"],
+        test: /\.(css|less)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+          "less-loader",
+        ],
       },
     ],
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "./src/index.html"),
       filename: "index.html",
@@ -31,6 +34,9 @@ module.exports = {
         collapseInlineTagWhitespace: true,
       },
       hash: true,
+    }),
+    new MiniCssExtractPlugin({
+      filename: "main.[hash:8].css",
     }),
   ],
   devServer: {
