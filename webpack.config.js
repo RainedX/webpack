@@ -10,18 +10,22 @@ module.exports = {
   mode: "development",
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true,
-      }),
+      // new UglifyJsPlugin({
+      //   cache: true,
+      //   parallel: true,
+      //   sourceMap: true,
+      // }),
       new OptimizeCssAssetsPlugin({}),
     ],
   },
-  entry: "./src/index.js",
+  entry: {
+    index: "./src/index.js",
+    other: "./src/other.js",
+  },
   output: {
-    filename: "bundle.[hash:8].js",
+    filename: "js/[name].[hash:8].js",
     path: path.resolve(__dirname, "build"),
+    publicPath: "/",
   },
   module: {
     rules: [
@@ -49,7 +53,8 @@ module.exports = {
           {
             loader: "url-loader",
             options: {
-              limit: 2000 * 1024,
+              limit: 1,
+              outputPath: "assets/img",
             },
           },
         ],
@@ -82,8 +87,9 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "./src/index.html"),
-      filename: "index.html",
+      template: path.resolve(__dirname, "./src/index1.html"),
+      filename: "index1.html",
+      chunks: ["index"],
       minify: {
         collapseInlineTagWhitespace: true,
       },
@@ -94,7 +100,7 @@ module.exports = {
       $: "jQuery", // value值不是随意自定义的，插件对外暴露的
     }),
     new MiniCssExtractPlugin({
-      filename: "main.[hash:8].css",
+      filename: "assets/css/main.[hash:8].css",
     }),
   ],
   //  通过cdn引入
