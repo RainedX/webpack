@@ -7,14 +7,14 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 const webpack = require("webpack")
 
 module.exports = {
-  mode: "development",
+  mode: "production",
   optimization: {
     minimizer: [
-      // new UglifyJsPlugin({
-      //   cache: true,
-      //   parallel: true,
-      //   sourceMap: true,
-      // }),
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true,
+      }),
       new OptimizeCssAssetsPlugin({}),
     ],
   },
@@ -53,7 +53,6 @@ module.exports = {
           {
             loader: "url-loader",
             options: {
-              limit: 1,
               outputPath: "assets/img",
             },
           },
@@ -88,7 +87,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "./src/index1.html"),
-      filename: "index1.html",
+      filename: "index.html",
       chunks: ["index"],
       minify: {
         collapseInlineTagWhitespace: true,
@@ -107,6 +106,13 @@ module.exports = {
   externals: {
     jquery: "$",
   },
+  watch: true,
+  watchOptions: {
+    poll: 1000,
+    aggregateTimeout: 500,
+    ignored: /node_modules/,
+  },
+  devtool: "cheap-module-eval-source-map",
   devServer: {
     port: 3000,
     progress: true,

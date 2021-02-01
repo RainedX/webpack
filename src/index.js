@@ -6,23 +6,21 @@ console.log(111, str)
 
 require("./index.css")
 
-
 let fn = () => {
-    console.log(123)
+  console.log(123)
 }
 fn()
 
-
 class A {
-    a = 1
+  a = 1
 }
 
-function *gen() {
-    yield 1;
+function* gen() {
+  yield 1
 }
 
 gen()
-import logo from  './im.png'
+import logo from "./im.png"
 let image = new Image()
 image.src = logo
 document.body.appendChild(image)
