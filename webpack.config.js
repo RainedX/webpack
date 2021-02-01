@@ -1,13 +1,13 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const webpack = require('webpack')
+const path = require("path")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin")
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+const webpack = require("webpack")
 
 module.exports = {
-  mode: 'development',
+  mode: "development",
   optimization: {
     minimizer: [
       new UglifyJsPlugin({
@@ -18,10 +18,10 @@ module.exports = {
       new OptimizeCssAssetsPlugin({}),
     ],
   },
-  entry: './src/index.js',
+  entry: "./src/index.js",
   output: {
-    filename: 'bundle.[hash:8].js',
-    path: path.resolve(__dirname, 'build'),
+    filename: "bundle.[hash:8].js",
+    path: path.resolve(__dirname, "build"),
   },
   module: {
     rules: [
@@ -38,29 +38,40 @@ module.exports = {
         test: /\.(css|less)$/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader',
-          'postcss-loader',
-          'less-loader',
+          "css-loader",
+          "postcss-loader",
+          "less-loader",
         ],
       },
       {
         test: /\.(png|jpg|gif)$/,
-        use: ['file-loader']
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 2000 * 1024,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.html$/,
+        use: ["html-withimg-loader"],
       },
       {
         test: /\.js$/,
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, "src"),
         exclude: /node_modules/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: "babel-loader",
             options: {
               // es6转es5
-              presets: ['@babel/preset-env'],
+              presets: ["@babel/preset-env"],
               // 转换class
               plugins: [
-                ['@babel/plugin-proposal-class-properties'],
-                ['@babel/plugin-transform-runtime'],
+                ["@babel/plugin-proposal-class-properties"],
+                ["@babel/plugin-transform-runtime"],
               ],
             },
           },
@@ -71,8 +82,8 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/index.html'),
-      filename: 'index.html',
+      template: path.resolve(__dirname, "./src/index.html"),
+      filename: "index.html",
       minify: {
         collapseInlineTagWhitespace: true,
       },
@@ -80,19 +91,19 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       // 在每个模块中注入$符
-      '$': 'jQuery' // value值不是随意自定义的，插件对外暴露的
+      $: "jQuery", // value值不是随意自定义的，插件对外暴露的
     }),
     new MiniCssExtractPlugin({
-      filename: 'main.[hash:8].css',
+      filename: "main.[hash:8].css",
     }),
   ],
   //  通过cdn引入
   externals: {
-    jquery: '$'
+    jquery: "$",
   },
   devServer: {
     port: 3000,
     progress: true,
-    contentBase: './build',
+    contentBase: "./build",
   },
-};
+}

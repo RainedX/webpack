@@ -1,9 +1,5 @@
-body {
-  background-color: green;
-}
 
 body #container {
-  background-color: red;
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
 }
