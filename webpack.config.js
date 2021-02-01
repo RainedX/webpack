@@ -44,6 +44,10 @@ module.exports = {
         ],
       },
       {
+        test: /\.(png|jpg|gif)$/,
+        use: ['file-loader']
+      },
+      {
         test: /\.js$/,
         include: path.resolve(__dirname, 'src'),
         exclude: /node_modules/,
@@ -76,7 +80,7 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       // 在每个模块中注入$符
-      '$': 'jquery' 
+      '$': 'jQuery' // value值不是随意自定义的，插件对外暴露的
     }),
     new MiniCssExtractPlugin({
       filename: 'main.[hash:8].css',

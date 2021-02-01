@@ -22,3 +22,7 @@ function *gen() {
 }
 
 gen()
+import logo from  './im.png'
+let image = new Image()
+image.src = logo
+document.body.appendChild(image)
