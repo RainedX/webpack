@@ -27,6 +27,7 @@ module.exports = {
     path: path.resolve(__dirname, "build"),
   },
   module: {
+    noParse: /jquery/, // 不去解析jquery中的依赖库
     rules: [
       // {
       //   test: require.resolve("jquery"),
@@ -116,6 +117,9 @@ module.exports = {
     poll: 1000,
     aggregateTimeout: 500,
     ignored: /node_modules/,
+  },
+  resolve: {
+    modules: [path.resolve("node_modules")],
   },
   devtool: "cheap-module-eval-source-map",
   // devServer: {
