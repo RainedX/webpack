@@ -25,7 +25,6 @@ module.exports = {
   output: {
     filename: "js/[name].[hash:8].js",
     path: path.resolve(__dirname, "build"),
-    publicPath: "/",
   },
   module: {
     rules: [
@@ -41,7 +40,12 @@ module.exports = {
         // style-loader 把css插入到header标签中
         test: /\.(css|less)$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: "../",
+            },
+          },
           "css-loader",
           "postcss-loader",
           "less-loader",
@@ -53,7 +57,8 @@ module.exports = {
           {
             loader: "url-loader",
             options: {
-              outputPath: "assets/img",
+              limit: 1024,
+              outputPath: "img",
             },
           },
         ],
@@ -99,7 +104,7 @@ module.exports = {
       $: "jQuery", // value值不是随意自定义的，插件对外暴露的
     }),
     new MiniCssExtractPlugin({
-      filename: "assets/css/main.[hash:8].css",
+      filename: "css/[name].css",
     }),
   ],
   //  通过cdn引入
@@ -113,9 +118,15 @@ module.exports = {
     ignored: /node_modules/,
   },
   devtool: "cheap-module-eval-source-map",
-  devServer: {
-    port: 3000,
-    progress: true,
-    contentBase: "./build",
-  },
+  // devServer: {
+  //   port: 3000,
+  //   progress: true,
+  //   contentBase: "./build",
+  //   proxy: {
+  //     "/api": {
+  //       target: "http://localhost:9000/",
+  //       pathRewrite: { "/api": "/" },
+  //     },
+  //   },
+  // },
 }

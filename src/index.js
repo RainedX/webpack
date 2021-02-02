@@ -24,3 +24,12 @@ import logo from "./im.png"
 let image = new Image()
 image.src = logo
 document.body.appendChild(image)
+
+let xhr = new XMLHttpRequest()
+
+xhr.open("GET", "/api/user", true)
+xhr.onload = function () {
+  console.log(1111, xhr.response)
+}
+
+xhr.send()
