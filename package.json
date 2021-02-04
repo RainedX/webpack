@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server",
+    "dev:dll": "webpack --config webpack.dll.js",
     "build": "webpack --config webpack.config.js"
   },
   "keywords": [],
@@ -15,6 +16,7 @@
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.13",
     "autoprefixer": "^9.3.1",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
@@ -46,6 +48,8 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "jquery": "^3.5.1"
+    "jquery": "^3.5.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   }
 }

@@ -77,7 +77,7 @@ module.exports = {
             loader: "babel-loader",
             options: {
               // es6转es5
-              presets: ["@babel/preset-env"],
+              presets: ["@babel/preset-env", "@babel/preset-react"],
               // 转换class
               plugins: [
                 ["@babel/plugin-proposal-class-properties"],
@@ -90,7 +90,9 @@ module.exports = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(),
+    new webpack.DllReferencePlugin({
+      manifest: path.resolve(__dirname, "build", "manifest.json"),
+    }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "./src/index1.html"),
       filename: "index.html",
@@ -112,25 +114,26 @@ module.exports = {
   externals: {
     jquery: "$",
   },
-  watch: true,
-  watchOptions: {
-    poll: 1000,
-    aggregateTimeout: 500,
-    ignored: /node_modules/,
-  },
+  // watch: true,
+  // watchOptions: {
+  //   poll: 1000,
+  //   aggregateTimeout: 500,
+  //   ignored: /node_modules/,
+  // },
   resolve: {
     modules: [path.resolve("node_modules")],
   },
   devtool: "cheap-module-eval-source-map",
-  // devServer: {
-  //   port: 3000,
-  //   progress: true,
-  //   contentBase: "./build",
-  //   proxy: {
-  //     "/api": {
-  //       target: "http://localhost:9000/",
-  //       pathRewrite: { "/api": "/" },
-  //     },
-  //   },
-  // },
+  devServer: {
+    port: 3000,
+    progress: true,
+    open: true,
+    contentBase: "./build",
+    proxy: {
+      "/api": {
+        target: "http://localhost:9000/",
+        pathRewrite: { "/api": "/" },
+      },
+    },
+  },
 }
