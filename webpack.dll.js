@@ -8,14 +8,14 @@ module.exports = {
   },
   output: {
     filename: "[name].js",
-    path: path.resolve(__dirname, "build"),
+    path: path.resolve(__dirname, "build/vendor"),
     library: "[name]", // 打包后结果赋值给一个变量
     libraryTarget: "var", // commonjs umd
   },
   plugins: [
     new webpack.DllPlugin({
       name: "[name]",
-      path: path.resolve(__dirname, "build", "manifest.json"), //任务清单
+      path: path.resolve(__dirname, "build/vendor", "manifest.json"), //任务清单
     }),
   ],
 }

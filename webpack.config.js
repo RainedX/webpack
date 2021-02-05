@@ -90,6 +90,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ["vendor.js", "manifest.json"],
+    }),
     new webpack.DllReferencePlugin({
       manifest: path.resolve(__dirname, "build", "manifest.json"),
     }),
@@ -114,12 +117,12 @@ module.exports = {
   externals: {
     jquery: "$",
   },
-  // watch: true,
-  // watchOptions: {
-  //   poll: 1000,
-  //   aggregateTimeout: 500,
-  //   ignored: /node_modules/,
-  // },
+  watch: true,
+  watchOptions: {
+    poll: 1000,
+    aggregateTimeout: 500,
+    ignored: /node_modules/,
+  },
   resolve: {
     modules: [path.resolve("node_modules")],
   },
