@@ -1,4 +1,5 @@
-import React from "react"
-import { render } from "react-dom"
+const box = document.createElement("div")
 
-render(<h1>hello world</h1>, document.getElementById("container"))
+box.innerHTML = "vue"
+
+document.body.appendChild(box)
