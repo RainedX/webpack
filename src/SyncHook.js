@@ -9,24 +9,18 @@ class Lesson {
   }
   // 注册监听函数
   tap() {
-    this.hooks.arch.tap("react", (name, child) => {
-      console.log("react", name, child)
+    this.hooks.arch.tap("react", (name) => {
+      console.log("react", name)
     })
-    this.hooks.arch.tap("node", (name, child) => {
-      console.log("node", name, child)
+    this.hooks.arch.tap("node", (name) => {
+      console.log("node", name)
     })
   }
   start() {
-    this.hooks.arch.call("rain", "yy")
+    this.hooks.arch.call("rain")
   }
 }
 
 let l = new Lesson()
 l.tap()
 l.start()
-
-function fn(...args) {
-  console.log(...args)
-}
-
-fn(1, 2, 3)
