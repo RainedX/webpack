@@ -63,15 +63,60 @@ class SyncWaterfallHook {
   }
 }
 
-let hook = new SyncWaterfallHook(["name"])
+// let hook = new SyncWaterfallHook(["name"])
 
-hook.tap("react", (name) => {
-  console.log("react", name)
-  return "react学的不错，传给下个钩子"
+// hook.tap("react", (name) => {
+//   console.log("react", name)
+//   return "react学的不错，传给下个钩子"
+// })
+
+// hook.tap("node", (name) => {
+//   console.log("node", name)
+// })
+
+// hook.call("rain")
+
+// 异步并行
+class AsyncParallelHook {
+  constructor() {
+    this.tasks = []
+  }
+
+  tapAsync(name, task) {
+    this.tasks.push(task)
+  }
+  callAsync(...args) {
+    let finalCallback = args.pop()
+    let index = 0
+
+    let done = () => {
+      index++
+      if (index === this.tasks.length) {
+        finalCallback()
+      }
+    }
+    this.tasks.forEach((task) => {
+      task(...args, done)
+    })
+  }
+}
+
+let hook = new AsyncParallelHook(["name"])
+
+hook.tapAsync("react", (name, cb) => {
+  setTimeout(() => {
+    console.log("react", name)
+    cb()
+  }, 1000)
 })
 
-hook.tap("node", (name) => {
-  console.log("node", name)
+hook.tapAsync("node", (name, cb) => {
+  setTimeout(() => {
+    console.log("node", name)
+    cb()
+  }, 1000)
 })
 
-hook.call("rain")
+hook.callAsync("rain", () => {
+  console.log("end")
+})
