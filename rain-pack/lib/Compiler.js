@@ -4,6 +4,7 @@ let t = require("@babel/types")
 let babelParser = require("@babel/parser")
 let traverse = require("@babel/traverse").default
 let generator = require("@babel/generator").default
+let ejs = require("ejs")
 // @babel/parser @babel/traverse @babel/types @babel/generator
 class Compiler {
   constructor(config) {
@@ -18,7 +19,21 @@ class Compiler {
     // 发射文件
     this.emitFile()
   }
-  emitFile() {}
+  emitFile() {
+    // 输出到哪个目录
+    let main = path.resolve(
+      this.config.output.path,
+      this.config.output.filename
+    )
+    let templateStr = this.getSource(path.resolve(__dirname, "main.ejs"))
+    let code = ejs.render(templateStr, {
+      entryId: this.entryId,
+      modules: this.modules,
+    })
+    this.assets = {}
+    this.assets[main] = code
+    fs.writeFileSync(main, this.assets[main])
+  }
   getSource(modulePath) {
     let content = fs.readFileSync(modulePath, "utf-8")
     return content

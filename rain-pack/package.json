@@ -5,5 +5,8 @@
   "license": "MIT",
   "bin": {
     "rain-pack": "./bin/rain-pack.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.6"
   }
 }
