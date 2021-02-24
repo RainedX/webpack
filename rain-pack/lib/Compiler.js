@@ -5,6 +5,7 @@ let babelParser = require("@babel/parser")
 let traverse = require("@babel/traverse").default
 let generator = require("@babel/generator").default
 let ejs = require("ejs")
+let { SyncHook } = require("tapable")
 // @babel/parser @babel/traverse @babel/types @babel/generator
 class Compiler {
   constructor(config) {
@@ -35,7 +36,25 @@ class Compiler {
     fs.writeFileSync(main, this.assets[main])
   }
   getSource(modulePath) {
+    let rules = this.config.module.rules
     let content = fs.readFileSync(modulePath, "utf-8")
+    // 拿到每个规则
+    for (let i = 0; i < rules.length; i++) {
+      let rule = rules[i]
+      let { test, use } = rule
+      let len = use.length - 1
+      if (test.test(modulePath)) {
+        //获取对应的loader函数
+        function normalLoader() {
+          let loader = require(use[len--])
+          content = loader(content)
+          if (len >= 0) {
+            normalLoader()
+          }
+        }
+        normalLoader()
+      }
+    }
     return content
   }
   parse(source, parentPath) {
