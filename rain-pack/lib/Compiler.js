@@ -14,11 +14,32 @@ class Compiler {
     this.modules = {}
     this.entry = config.entry
     this.root = process.cwd()
+    this.hooks = {
+      entryOption: new SyncHook(),
+      compile: new SyncHook(),
+      afterCompile: new SyncHook(),
+      afterPlugins: new SyncHook(),
+      run: new SyncHook(),
+      emit: new SyncHook(),
+      done: new SyncHook(),
+    }
+    let plugins = this.config.plugins
+    if (Array.isArray(plugins)) {
+      plugins.forEach((plugin) => {
+        plugin.apply(this)
+      })
+    }
+    this.hooks.afterPlugins.call()
   }
   run() {
+    this.hooks.run.call()
+    this.hooks.compile.call()
     this.buildModule(path.resolve(this.root, this.entry), true)
+    this.hooks.afterCompile.call()
     // 发射文件
     this.emitFile()
+    this.hooks.emit.call()
+    this.hooks.done.call()
   }
   emitFile() {
     // 输出到哪个目录
