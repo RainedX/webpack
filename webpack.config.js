@@ -15,13 +15,21 @@ module.exports = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
   },
+  resolveLoader: {
+    modules: ["node_modules", path.resolve(__dirname, "loaders")],
+  },
+  devtool: "source-map",
   module: {
     rules: [
       {
-        test: /\.less$/,
+        test: /\.js$/,
         use: [
-          path.resolve(__dirname, "loader", "style-loader"),
-          path.resolve(__dirname, "loader", "less-loader"),
+          {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-env"],
+            },
+          },
         ],
       },
     ],
