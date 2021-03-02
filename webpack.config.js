@@ -18,16 +18,33 @@ module.exports = {
   resolveLoader: {
     modules: ["node_modules", path.resolve(__dirname, "loaders")],
   },
+  // watch: true,
   devtool: "source-map",
   module: {
     rules: [
+      // {
+      //   test: /\.js$/,
+      //   use: [
+      //     {
+      //       loader: "babel-loader",
+      //       options: {
+      //         presets: ["@babel/preset-env"],
+      //       },
+      //     },
+      //   ],
+      // },
+      {
+        test: /\.png$/,
+        use: ["file-loader"],
+      },
       {
         test: /\.js$/,
         use: [
           {
-            loader: "babel-loader",
+            loader: "banner-loader",
             options: {
-              presets: ["@babel/preset-env"],
+              text: "rain",
+              filename: path.resolve(__dirname, "banner.js"),
             },
           },
         ],

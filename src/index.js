@@ -1,10 +1,7 @@
-let str = require("./a.js")
-console.log(str)
+// let str = require("./a.js")
+// console.log(str)
 
-class AAA {
-  constructor() {
-    this.name = name
-  }
-}
-
-const aaa = new AAA()
+import imgSrc from "./111.png"
+let img = document.createElement("img")
+img.src = imgSrc
+document.body.appendChild(img)
