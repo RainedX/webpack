@@ -1,4 +1,3 @@
-import React from "react"
-import { render } from "react-dom"
+const moduleA = require('./moduleA.js');
 
-render(<h1>hello world</h1>, document.getElementById("container"))
+console.log(moduleA.name);

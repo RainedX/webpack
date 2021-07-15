@@ -1,2 +1,0 @@
-/** @format */
-module.exports = "hello"
