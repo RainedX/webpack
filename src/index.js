@@ -1,3 +1,5 @@
-const moduleA = require('./moduleA.js');
+import './index.css';
+import './index.less';
+import './avatar.png';
 
-console.log(moduleA.name);
+const moduleA = require('./moduleA.js');
