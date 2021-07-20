@@ -2,13 +2,17 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const FileManagerWebpackPlugin = require("filemanager-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 
+console.log("webpack: ", process.env.NODE_ENV);
 module.exports = {
-  mode: "production",
+  mode: "development",
   devtool: 'source-map',
   entry: {
     index: path.resolve(__dirname, "src/index.js"),
+    main: path.resolve(__dirname, "src/main.js")
   },
   output: {
     filename: "[name].js",
@@ -41,11 +45,11 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
       },
       {
         test: /\.less$/,
-        use: ['style-loader', 'css-loader', 'less-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -66,6 +70,17 @@ module.exports = {
     }),
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['**/*']
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'src/document'),
+          to: path.resolve(__dirname, 'dist/document`')
+        }
+      ]
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].css'
     }),
     // new webpack.SourceMapDevToolPlugin({
     //   filename: '[file].map',

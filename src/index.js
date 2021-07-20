@@ -1,4 +1,4 @@
-import './index.css';
+import './css/index.css';
 // let logo =  require('./avatar.png');
 
 // let image = new Image();
@@ -6,10 +6,9 @@ import './index.css';
 // document.body.appendChild(image);
 
 let sum = (a, b) => {
-  console.log(1111, v);
   return a - b;
 } 
-
+console.log("page: ", process.env.NODE_ENV);
 sum();
 
 // const p = new Promise((resolve, reject) => {
