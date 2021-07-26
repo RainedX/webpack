@@ -1,17 +1,6 @@
-// let moduleTitle = require("./title.js");
-// console.log(moduleTitle);
+import { flatten, concat } from 'lodash';
+// import flatten from 'lodash/flatten';
+// import concat from 'lodash/concat';
 
-
-// import name, { age } from "./title";
-// console.log(name);
-// console.log(age);
-
-const btn = document.createElement('button');
-btn.innerHTML = 'click';
-btn.addEventListener('click', () => {
-  import('./title.js').then(res => {
-    console.log(res);
-  })
-});
-
-document.body.appendChild(btn);
+console.log(flatten([1, [2, 3]]));
+console.log(concat([1], [3, 5]));

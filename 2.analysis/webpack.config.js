@@ -9,7 +9,24 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "main.js",
   },
-  module: {},
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            plugins: [
+              [path.resolve(__dirname, 'src/babel-plugin-import.js'), {
+                libraryName: 'lodash',
+                libraryDirectory: 'fp'
+              }]
+            ]
+          }
+        }
+      }
+    ]
+  },
   plugins: [
     new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ["**/*"] }),
     new HtmlWebpackPlugin({
