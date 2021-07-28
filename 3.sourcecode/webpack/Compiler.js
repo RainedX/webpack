@@ -1,7 +1,7 @@
 let { SyncHook } = require('tapable');
 let path = require('path');
 let fs = require('fs');
-
+let Compilation = require('./Compilation');
 class Compiler {
   constructor(options) {
     this.options = options;
@@ -11,14 +11,16 @@ class Compiler {
     };
   }
 
-  run() {
+  run(callback) {
     this.hooks.run.call();
     // 根据配置中的entry找到入口文件
-    let entry = this.options.entry;
-
+    this.compile(callback);
     this.hooks.done.call();
   }
-  compile() {}
+  compile(callback) {
+    let complication = new Compilation(this.options);
+    complication.build(callback);
+  }
 }
 
 module.exports = Compiler;

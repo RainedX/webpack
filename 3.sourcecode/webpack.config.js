@@ -8,7 +8,7 @@ module.exports = {
   mode: "development",
   devtool: false,
   entry: {
-    index: path.resolve(__dirname, "./src/index.js")
+    main: "./src/index.js"
   },
   output: {
     path: path.join(__dirname, "dist"),
@@ -18,7 +18,16 @@ module.exports = {
     extensions: [".js", ".jsx", ".json"],
   },
   module: {
-    rules: [],
+    rules: [
+      {
+        test: /\.js$/,
+        use: [
+          path.resolve(__dirname, './loaders/logger1-loader.js'),
+          path.resolve(__dirname, './loaders/logger2-loader.js'),
+          path.resolve(__dirname, './loaders/logger3-loader.js')
+        ]
+      }
+    ],
   },
   plugins: [
     // new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ["**/*"] }),
