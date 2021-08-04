@@ -8,7 +8,8 @@ module.exports = {
   mode: "development",
   devtool: false,
   entry: {
-    main: "./src/index.js"
+    main: "./src/index.js",
+    entry2: "./src/entry2.js"
   },
   output: {
     path: path.join(__dirname, "dist"),
@@ -22,9 +23,7 @@ module.exports = {
       {
         test: /\.js$/,
         use: [
-          path.resolve(__dirname, './loaders/logger1-loader.js'),
-          path.resolve(__dirname, './loaders/logger2-loader.js'),
-          path.resolve(__dirname, './loaders/logger3-loader.js')
+          path.resolve(__dirname, './loaders/logger1-loader.js')
         ]
       }
     ],

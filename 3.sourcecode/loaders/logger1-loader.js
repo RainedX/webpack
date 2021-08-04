@@ -1,5 +1,5 @@
 function loader(source) {
-  return source + '1';
+  return source;
 }
 
 module.exports = loader;

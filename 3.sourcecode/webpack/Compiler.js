@@ -14,7 +14,11 @@ class Compiler {
   run(callback) {
     this.hooks.run.call();
     // 根据配置中的entry找到入口文件
-    this.compile(callback);
+    this.compile((err, stats) => {
+      callback(null, {
+        toJson:() => stats
+      });
+    });
     this.hooks.done.call();
   }
   compile(callback) {
